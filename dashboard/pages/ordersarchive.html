@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/logo.jfif">
+    <title>Bioty Corner - Archived Orders</title>
+</head>
+<body>
+    <script>
+        // Redirect to login page if not logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+      <!-- SIDEBAR -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs'></i>
+        <span class="text">Bioty Corner</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a href="../index.html">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="products.html">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Products</span>
+            </a>
+        </li>
+        <li>
+            <a href="orders.html">
+                <i class='bx bxs-doughnut-chart'></i>
+                <span class="text">Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="ordersarchive.html">
+                <i class='bx bxs-archive'></i>
+                <span class="text">Archived Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="users.html">
+                <i class='bx bxs-user'></i>
+                <span class="text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a href="shop.html">
+                <i class='bx bxs-cart'></i>
+                <span class="text">Shop</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="login.html" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link"></a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="../img/logo.jfif">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Archived Orders</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Orders</a></li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li><a class="active" href="#">Archived Orders</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Archived Orders Table -->
+            <div class="table-data">
+                <div class="order">
+                    <div class="head">
+                        <h3>Archived Orders</h3>
+                        <i class='bx bx-search'></i>
+                        <i class='bx bx-filter'></i>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Products</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Billing Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="archived-orders-table-body">
+                            <!-- Archived orders will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+
+        <!-- Billing Details Modal -->
+        <div id="billing-details-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hideBillingDetails()">&times;</span>
+                <h2>Billing Details</h2>
+                <div id="billing-details-content">
+                    <!-- Billing details will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        // Function to display archived orders with billing details
+        function displayArchivedOrders() {
+            const archivedOrdersTableBody = document.getElementById('archived-orders-table-body');
+            const archivedOrders = JSON.parse(localStorage.getItem('archivedOrders')) || [];
+
+            // Clear existing rows
+            archivedOrdersTableBody.innerHTML = '';
+
+            // Add each archived order to the table
+            archivedOrders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>
+                        <ul class="order-products">
+                            ${order.products.map(product => `
+                                <li>
+                                    <span class="product-name">${product.name}</span>
+                                    <span class="product-price">${product.price} DH</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </td>
+                    <td>${order.total} DH</td>
+                    <td>${order.date}</td>
+                    <td>
+                        <button class="btn btn-primary" onclick="showBillingDetails(${order.id})">View Billing</button>
+                    </td>
+                `;
+                archivedOrdersTableBody.appendChild(row);
+            });
+        }
+
+        // Function to show billing details in a modal
+        function showBillingDetails(orderId) {
+            const archivedOrders = JSON.parse(localStorage.getItem('archivedOrders')) || [];
+            const order = archivedOrders.find(o => o.id === orderId);
+
+            if (order && order.billingDetails) {
+                const billingDetails = order.billingDetails;
+                const modalContent = `
+                    <p><strong>Name:</strong> ${billingDetails.name}</p>
+                    <p><strong>Email:</strong> ${billingDetails.email}</p>
+                    <p><strong>Phone:</strong> ${billingDetails.phone}</p>
+                    <p><strong>Address:</strong> ${billingDetails.address}</p>
+                    <p><strong>Postal Code:</strong> ${billingDetails.postalCode}</p>
+                `;
+
+                // Display the modal
+                const modal = document.getElementById('billing-details-modal');
+                const billingDetailsContent = document.getElementById('billing-details-content');
+                billingDetailsContent.innerHTML = modalContent;
+                modal.style.display = 'block';
+            } else {
+                alert('Billing details not found for this order.');
+            }
+        }
+
+        // Function to hide billing details modal
+        function hideBillingDetails() {
+            const modal = document.getElementById('billing-details-modal');
+            modal.style.display = 'none';
+        }
+
+        // Initialize Archived Orders Page
+        document.addEventListener('DOMContentLoaded', function () {
+            if (document.getElementById('archived-orders-table-body')) {
+                displayArchivedOrders();
+            }
+        });
+    </script>
+</body>
+</html>

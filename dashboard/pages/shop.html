@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../img/logo.jfif">
+    <title>Bioty Corner - Shop</title>
+</head>
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs'></i>
+            <span class="text">Bioty Corner</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="../index.html">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="products.html">
+                    <i class='bx bxs-shopping-bag-alt'></i>
+                    <span class="text">Products</span>
+                </a>
+            </li>
+            <li>
+                <a href="orders.html">
+                    <i class='bx bxs-doughnut-chart'></i>
+                    <span class="text">Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="ordersarchive.html">
+                    <i class='bx bxs-archive'></i>
+                    <span class="text">Archived Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class='bx bxs-user'></i>
+                    <span class="text">Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="shop.html">
+                    <i class='bx bxs-cart'></i>
+                    <span class="text">Shop</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="login.html" class="logout" onclick="logout()">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link"></a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="../img/logo.jfif">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Shop Products</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Shop</a></li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li><a class="active" href="#">Products</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Product List -->
+            <div class="product-list" id="product-list">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+
+            <!-- Cart Section -->
+            <div class="cart-section">
+                <h2>Your Cart</h2>
+                <ul id="cart-items">
+                    <!-- Cart items will be dynamically inserted here -->
+                </ul>
+                <p>Total: <span id="cart-total">0 DH</span></p>
+                <button class="btn btn-primary" onclick="showBillingModal()">Place Order</button>
+                <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
+            </div>
+
+            <!-- Billing Modal (Hidden by default) -->
+            <div id="billing-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="hideBillingModal()">&times;</span>
+                    <h2>Billing Details</h2>
+                    <form id="billing-details-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postal-code">Postal Code</label>
+                            <input type="text" id="postal-code" name="postal-code" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Confirm Order</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideBillingModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        // Fetch Products from LocalStorage
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+
+        // Display Products
+        const productList = document.getElementById('product-list');
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.title}">
+                <h3>${product.title}</h3>
+                <p>Price: ${product.regularPrice} DH</p>
+                <button class="btn btn-primary" onclick="addToCart('${product.title}', ${product.regularPrice})">Add to Cart</button>
+            `;
+            productList.appendChild(productCard);
+        });
+
+        // Cart Data
+        let cart = [];
+
+        // Add Product to Cart
+        function addToCart(productName, price) {
+            const product = { name: productName, price: price };
+            cart.push(product);
+            updateCartUI();
+        }
+
+        // Update Cart UI
+        function updateCartUI() {
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ${item.price} DH`;
+                cartItems.appendChild(li);
+                total += item.price;
+            });
+
+            cartTotal.textContent = `${total} DH`;
+        }
+
+        // Function to clear the cart
+        function clearCart() {
+            if (cart.length === 0) {
+                alert('Your cart is already empty!');
+                return;
+            }
+
+            // Confirm with the user before clearing the cart
+            const confirmClear = confirm('Are you sure you want to clear your cart?');
+            if (confirmClear) {
+                cart = []; // Clear the cart array
+                updateCartUI(); // Update the cart UI
+                alert('Cart cleared successfully!');
+            }
+        }
+
+        // Show Billing Modal
+        function showBillingModal() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Show the modal
+            document.getElementById('billing-modal').style.display = 'block';
+        }
+
+        // Hide Billing Modal
+        function hideBillingModal() {
+            document.getElementById('billing-modal').style.display = 'none';
+        }
+
+        // Handle Billing Form Submission
+        document.getElementById('billing-details-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get billing details
+            const billingDetails = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                postalCode: document.getElementById('postal-code').value
+            };
+
+            // Place the order with billing details
+            placeOrder(billingDetails);
+        });
+
+        // Place Order
+        function placeOrder(billingDetails) {
+            // Save Order to LocalStorage
+            const order = {
+                id: Date.now(), // Unique ID for the order
+                products: cart,
+                total: cart.reduce((sum, item) => sum + item.price, 0),
+                date: new Date().toLocaleDateString(),
+                status: 'Pending',
+                billingDetails: billingDetails
+            };
+
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Clear Cart
+            cart = [];
+            updateCartUI();
+
+            // Hide the modal
+            hideBillingModal();
+
+            // Notify the user
+            alert('Order placed successfully!');
+            window.location.href = 'orders.html'; // Redirect to Orders Page
+        }
+    </script>
+</body>
+</html>

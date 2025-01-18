@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/addproduct.css">
+    <link rel="icon" href="../img/logo.jfif">
+    <title>Bioty Corner - Add Product</title>
+</head>
+<body>
+    <script>
+        // Redirect to login page if not logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <i class='bx bxs'></i>
+            <span class="text">Bioty Corner</span>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="../index.html">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="products.html">
+                    <i class='bx bxs-shopping-bag-alt'></i>
+                    <span class="text">Products</span>
+                </a>
+            </li>
+            <li>
+                <a href="orders.html">
+                    <i class='bx bxs-doughnut-chart'></i>
+                    <span class="text">Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="ordersarchive.html">
+                    <i class='bx bxs-archive'></i>
+                    <span class="text">Archived Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class='bx bxs-user'></i>
+                    <span class="text">Users</span>
+                </a>
+            </li>
+            <li>
+                <a href="shop.html">
+                    <i class='bx bxs-cart'></i>
+                    <span class="text">Shop</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a href="login.html" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link"></a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="../img/logo.jfif">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <ul class="breadcrumb">
+                        <li><i class='bx bx-chevron-left'></i></li>
+                        <li><a class="active" href="products.html">Return</a></li>
+                    </ul>
+                    <h1>Add a Product</h1>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-third" type="button" id="discard-btn">Discard</button>
+                    <button class="btn btn-secondary" type="button">Save draft</button>
+                    <button class="btn btn-primary mb-2 mb-sm-0" type="submit" form="add-product-form">Publish product</button>
+                </div>
+            </div>
+            <form class="table-data" id="add-product-form">
+                <div class="order">
+                    <h4 class="mb-3">Product Title</h4>
+                    <input class="form-control mb-5" type="text" placeholder="Write title here..." id="product-title" required />
+                    <h4 class="mb-3">Product Description</h4>
+                    <textarea class="form-control mb-5" name="content" style="height:10rem; width:100%;" placeholder="Write a description here..." id="product-description" required></textarea>
+                    <h4 class="mb-3">Product images</h4>
+                    <input class="form-control mb-5" type="file" value="Browse from device" placeholder="Browse from device" id="product-image" required>
+                    <h4 class="mb-3">Quantity</h4>
+                    <input class="form-control" type="number" placeholder="Quantity" id="product-quantity" required>
+                </div>
+                <div class="todo">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title mb-4">Organize</h3>
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-4">
+                                        <div class="d-flex flex-wrap mb-2">
+                                            <h5 class="mb-0 text-1000 me-2">Category</h5>
+                                            <a class="fw-bold fs--1" href="#!">Add new category</a>
+                                        </div>
+                                        <select class="form-select mb-3" name="category" id="product-category" required>
+                                            <option value="Visage">Visage</option>
+                                            <option value="Corps">Corps</option>
+                                            <option value="Cheveau">Cheveau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-4">
+                                        <div class="d-flex flex-wrap mb-2">
+                                            <h5 class="mb-0 text-1000 me-2">Tags</h5>
+                                            <a class="fw-bold fs--1" href="#!">View all tags</a>
+                                        </div>
+                                        <select class="form-select mb-3" name="tags" id="product-tags" required>
+                                            <option value="Creme">Creme</option>
+                                            <option value="Champo">Champo</option>
+                                            <option value="Gel">Gel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-xl-4">
+                                        <h5 class="mb-2 text-1000">Regular Price</h5>
+                                        <input class="form-control mb-xl-3" type="text" placeholder="00.00 dh" id="product-regular-price" required />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-xl-4">
+                                        <h5 class="mb-2 text-1000">Sale Price</h5>
+                                        <input class="form-control mb-xl-3" type="text" placeholder="00.00 dh" id="product-sale-price" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        // Handle form submission
+        document.getElementById('add-product-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            const product = {
+                title: document.getElementById('product-title').value,
+                description: document.getElementById('product-description').value,
+                quantity: document.getElementById('product-quantity').value,
+                category: document.getElementById('product-category').value,
+                tags: document.getElementById('product-tags').value,
+                regularPrice: document.getElementById('product-regular-price').value,
+                salePrice: document.getElementById('product-sale-price').value,
+                image: null // Initialize image as null
+            };
+
+            // Handle image upload
+            const imageFile = document.getElementById('product-image').files[0];
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // Convert the image to a Base64 string
+                    product.image = e.target.result;
+
+                    // Save product to localStorage
+                    let products = JSON.parse(localStorage.getItem('products')) || [];
+                    products.push(product);
+                    localStorage.setItem('products', JSON.stringify(products));
+
+                    // Redirect to products.html
+                    window.location.href = 'products.html';
+                };
+                reader.readAsDataURL(imageFile); // Read the image file as a Base64 string
+            } else {
+                // If no image is uploaded, save the product without an image
+                let products = JSON.parse(localStorage.getItem('products')) || [];
+                products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+
+                // Redirect to products.html
+                window.location.href = 'products.html';
+            }
+        });
+
+        // Discard button functionality
+        document.getElementById('discard-btn').addEventListener('click', function () {
+            // Clear all form fields
+            document.getElementById('add-product-form').reset();
+        });
+    </script>
+</body>
+</html>

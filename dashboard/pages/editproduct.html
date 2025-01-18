@@ -1,0 +1,238 @@
+<!-- editproduct.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/addproduct.css">
+    <link rel="icon" href="../img/logo.jfif">
+    <title>Edit Product</title>
+</head>
+<body>
+    <script>
+        // Redirect to login page if not logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+       <!-- SIDEBAR -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs'></i>
+        <span class="text">Bioty Corner</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a href="../index.html">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="products.html">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Products</span>
+            </a>
+        </li>
+        <li>
+            <a href="orders.html">
+                <i class='bx bxs-doughnut-chart'></i>
+                <span class="text">Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="ordersarchive.html">
+                <i class='bx bxs-archive'></i>
+                <span class="text">Archived Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="users.html">
+                <i class='bx bxs-user'></i>
+                <span class="text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a href="shop.html">
+                <i class='bx bxs-cart'></i>
+                <span class="text">Shop</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="login.html" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link"></a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="../img/logo.jfif">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <ul class="breadcrumb">
+                        <li><i class='bx bx-chevron-left'></i></li>
+                        <li><a class="active" href="products.html">Return</a></li>
+                    </ul>
+                    <h1>Edit Product</h1>
+                </div>
+                <div class="col-auto">
+                    <form class="table-data" id="edit-product-form">
+                        <!-- Form fields go here -->
+                        <button class="btn btn-third" type="button" id="discard-btn">Discard</button>
+                        <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Update Product</button>
+                    </form>
+                </div>
+            </div>
+            <form class="table-data" id="edit-product-form">
+                <div class="order">
+                    <h4 class="mb-3">Product Title</h4>
+                    <input class="form-control mb-5" type="text" id="edit-product-title" placeholder="Write title here..." />
+                    <h4 class="mb-3">Product Description</h4>
+                    <textarea class="form-control mb-5" id="edit-product-description" name="content" style="height:10rem; width:100%;" placeholder="Write a description here..."></textarea>
+                    <h4 class="mb-3">Product images</h4>
+                    <input class="form-control mb-5" type="file" id="edit-product-image" value="Browse from device" placeholder="Browse from device">
+                    <h4 class="mb-3">Quantity</h4>
+                    <input class="form-control" type="number" id="edit-product-quantity" placeholder="Quantity">
+                </div>
+                <div class="todo">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h3 class="card-title mb-4">Organize</h3>
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-4">
+                                        <div class="d-flex flex-wrap mb-2">
+                                            <h5 class="mb-0 text-1000 me-2">Category</h5>
+                                            <a class="fw-bold fs--1" href="#!">Add new category</a>
+                                        </div>
+                                        <select class="form-select mb-3" id="edit-product-category" name="category">
+                                            <option value="Visage">Visage</option>
+                                            <option value="Corps">Corps</option>
+                                            <option value="Cheveau">Cheveau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-4">
+                                        <div class="d-flex flex-wrap mb-2">
+                                            <h5 class="mb-0 text-1000 me-2">Tags</h5>
+                                            <a class="fw-bold fs--1" href="#!">View all tags</a>
+                                        </div>
+                                        <select class="form-select mb-3" id="edit-product-tags" name="tags">
+                                            <option value="Creme">Creme</option>
+                                            <option value="Champo">Champo</option>
+                                            <option value="Gel">Gel</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-xl-4">
+                                        <h5 class="mb-2 text-1000">Regular Price</h5>
+                                        <input class="form-control mb-xl-3" type="text" id="edit-product-regular-price" placeholder="00.00 dh" />
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-xl-12">
+                                    <div class="mb-xl-4">
+                                        <h5 class="mb-2 text-1000">Sale Price</h5>
+                                        <input class="form-control mb-xl-3" type="text" id="edit-product-sale-price" placeholder="00.00 dh" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        // Get the product index from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productIndex = urlParams.get('index');
+
+        // Load the product data from localStorage
+        const products = JSON.parse(localStorage.getItem('products')) || [];
+        const product = products[productIndex];
+
+        // Pre-fill the form with the product's data
+        if (product) {
+            document.getElementById('edit-product-title').value = product.title;
+            document.getElementById('edit-product-description').value = product.description;
+            document.getElementById('edit-product-quantity').value = product.quantity;
+            document.getElementById('edit-product-category').value = product.category;
+            document.getElementById('edit-product-tags').value = product.tags;
+            document.getElementById('edit-product-regular-price').value = product.regularPrice;
+            document.getElementById('edit-product-sale-price').value = product.salePrice;
+        }
+
+        // Handle form submission
+        document.getElementById('edit-product-form').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Get updated form values
+    const updatedProduct = {
+        title: document.getElementById('edit-product-title').value,
+        description: document.getElementById('edit-product-description').value,
+        quantity: document.getElementById('edit-product-quantity').value,
+        category: document.getElementById('edit-product-category').value,
+        tags: document.getElementById('edit-product-tags').value,
+        regularPrice: document.getElementById('edit-product-regular-price').value,
+        salePrice: document.getElementById('edit-product-sale-price').value,
+        image: product.image // Keep the existing image unless a new one is uploaded
+    };
+
+    // Handle image upload if a new image is selected
+    const imageInput = document.getElementById('edit-product-image');
+    if (imageInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            updatedProduct.image = e.target.result;
+            saveUpdatedProduct(updatedProduct, productIndex);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+    } else {
+        saveUpdatedProduct(updatedProduct, productIndex);
+    }
+});
+
+        // Function to save the updated product
+        function saveUpdatedProduct(updatedProduct, index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products[index] = updatedProduct;
+            localStorage.setItem('products', JSON.stringify(products));
+            window.location.href = 'products.html';
+        }
+         // Discard button functionality
+         document.getElementById('discard-btn').addEventListener('click', function () {
+            // Redirect to users.html without saving changes
+            window.location.href = 'products.html';
+        });
+    </script>
+</body>
+</html>

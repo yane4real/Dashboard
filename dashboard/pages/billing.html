@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Billing Details</title>
+</head>
+<body>
+    <div class="billing-form">
+        <h2>Billing Details</h2>
+        <form id="billing-details-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="postal-code">Postal Code</label>
+                <input type="text" id="postal-code" name="postal-code" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('billing-details-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get billing details
+            const billingDetails = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                postalCode: document.getElementById('postal-code').value
+            };
+
+            // Save billing details to localStorage
+            localStorage.setItem('billingDetails', JSON.stringify(billingDetails));
+
+            // Send a message back to the parent window
+            window.opener.postMessage('billingDetailsSubmitted', '*');
+
+            // Close the window
+            window.close();
+        });
+    </script>
+</body>
+</html>

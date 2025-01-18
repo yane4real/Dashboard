@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/addproduct.css">
+    <link rel="icon" href="../img/logo.jfif">
+    <title>Bioty Corner - Add User</title>
+</head>
+<body>
+    <script>
+        // Redirect to login page if not logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+      <!-- SIDEBAR -->
+<section id="sidebar">
+    <a href="#" class="brand">
+        <i class='bx bxs'></i>
+        <span class="text">Bioty Corner</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a href="../index.html">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="products.html">
+                <i class='bx bxs-shopping-bag-alt'></i>
+                <span class="text">Products</span>
+            </a>
+        </li>
+        <li>
+            <a href="orders.html">
+                <i class='bx bxs-doughnut-chart'></i>
+                <span class="text">Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="ordersarchive.html">
+                <i class='bx bxs-archive'></i>
+                <span class="text">Archived Orders</span>
+            </a>
+        </li>
+        <li>
+            <a href="users.html">
+                <i class='bx bxs-user'></i>
+                <span class="text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a href="shop.html">
+                <i class='bx bxs-cart'></i>
+                <span class="text">Shop</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a href="login.html" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link"></a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="../img/logo.jfif">
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <ul class="breadcrumb">
+                        <li><i class='bx bx-chevron-left'></i></li>
+                        <li><a class="active" style="cursor: pointer;" href="users.html">Return</a></li>
+                    </ul>
+                    <h1>Add a User</h1>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-third" type="button" id="discard-btn">Discard</button>
+                    <button class="btn btn-primary mb-2 mb-sm-0" id="publish-user" type="submit">Save</button>
+                </div>
+            </div>
+            <form class="table-data" id="add-user-form">
+                <div class="order">
+                    <h4 class="mb-3">User Name</h4>
+                    <input class="form-control mb-5" type="text" placeholder="Write name here..." id="user-name" required />
+                    <h4 class="mb-3">User Email</h4>
+                    <input class="form-control mb-5" type="email" placeholder="Write email here..." id="user-email" required />
+                    <h4 class="mb-3">User Phone</h4>
+                    <input class="form-control mb-5" type="tel" placeholder="Write phone number here..." id="user-phone" required />
+                    <h4 class="mb-3">User Address</h4>
+                    <input class="form-control mb-5" type="text" placeholder="Write address here..." id="user-address" required />
+                    <h4 class="mb-3">Postal Code</h4>
+                    <input class="form-control mb-5" type="text" placeholder="Write postal code here..." id="user-postal-code" required />
+                </div>
+            </form>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <script>
+        // Save user to localStorage
+        document.getElementById('publish-user').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const userName = document.getElementById('user-name').value;
+            const userEmail = document.getElementById('user-email').value;
+            const userPhone = document.getElementById('user-phone').value;
+            const userAddress = document.getElementById('user-address').value;
+            const userPostalCode = document.getElementById('user-postal-code').value;
+
+            // Create user object
+            const user = {
+                name: userName,
+                email: userEmail,
+                phone: userPhone,
+                address: userAddress,
+                postalCode: userPostalCode
+            };
+
+            // Save user to localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Redirect to users.html
+            window.location.href = 'users.html';
+        });
+        document.getElementById('discard-btn').addEventListener('click', function () {
+    // Clear all form fields
+    document.getElementById('user-name').value = '';
+    document.getElementById('user-email').value = '';
+    document.getElementById('user-phone').value = '';
+    document.getElementById('user-address').value = '';
+    document.getElementById('user-postal-code').value = '';
+
+    // Optionally, redirect to users.html
+    window.location.href = 'users.html';
+});
+    </script>
+</body>
+</html>
